@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Cricket</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0px;
+      }
+      .Body {
+        margin: 5%;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid black;
+        box-shadow: 0px 0px 7px 1px;
+        padding-bottom: 5%;
+        border-radius: 10px;
+      }
+      span {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        background-image: url(download4.jpeg);
+        opacity: 1;
+        background-size: contain;
+
+        margin-bottom: 30px !important;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+      }
+      .spam img {
+        display: block;
+        margin: auto;
+      }
+      #body {
+        margin: 0;
+        padding: 0;
+        height: 80px;
+        text-align: center;
+      }
+      #body h1 {
+        padding: 20px 0px 20px 0px;
+      }
+
+      #k {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        border-radius: 50%;
+        background-color: rgb(13, 65, 129);
+        color: #ffffff;
+        height: 90px;
+        width: 90px;
+        background-image: linear-gradient(rgb(2, 47, 88), rgb(9, 130, 157));
+      }
+      #kk {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        border-radius: 50%;
+        background-color: rgb(13, 65, 129);
+        color: #ffffff;
+        height: 90px;
+        width: 90px;
+        background-image: linear-gradient(rgb(2, 47, 88), rgb(9, 130, 157));
+      }
+      #kkk {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        border-radius: 50%;
+        background-color: rgb(13, 65, 129);
+        color: #ffffff;
+        height: 90px;
+        width: 90px;
+        background-image: linear-gradient(rgb(2, 47, 88), rgb(9, 130, 157));
+      }
+
+      #k:hover {
+        background-image: linear-gradient(rgb(2, 18, 72), rgb(255, 255, 255));
+        border-color: rgb(0, 0, 0);
+        color: #ffffff;
+      }
+
+      #kk:hover {
+        background-image: linear-gradient(rgb(0, 11, 46), rgb(255, 255, 255));
+        border-color: rgb(0, 0, 0);
+        color: #ffffff;
+      }
+      #kkk:hover {
+        background-image: linear-gradient(rgb(0, 11, 46), rgb(255, 255, 255));
+        border-color: rgb(0, 0, 0);
+        color: #ffffff;
+      }
+
+      #bat {
+        border-radius: 100%;
+        height: 60px;
+        width: 60px;
+      }
+      #ball {
+        border-radius: 100%;
+        height: 60px;
+        width: 60px;
+      }
+      #stump {
+        border-radius: 100%;
+        height: 60px;
+        width: 60px;
+      }
+      #buttons {
+        display: flex;
+        text-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        margin-bottom: 30px !important;
+      }
+
+      .kkkkk {
+        display: flex;
+        justify-content: center;
+      }
+      #kkkk {
+        background-image: linear-gradient(red, yellow);
+        color: #000000;
+        padding: 3px 8px;
+        border: 2px solid rgb(211, 204, 0);
+        border-radius: 5px;
+        font-weight: bold;
+        margin-bottom: 30px !important;
+      }
+      #kkkk:hover {
+        background-image: linear-gradient(green, yellow);
+        border: 2px solid rgb(230, 254, 122);
+      }
+      .result {
+        display: flex;
+        text-align: center;
+        flex-direction: column;
+        color: rgb(0, 0, 0);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="Body">
+      <span id="body">
+        <h1>CRICKET</h1>
+      </span>
+      <div id="buttons">
+        <button
+          id="k"
+          onclick="
+
+ let  computerChoice=scriptCode();
+ let resultmsg=getResult(`Bat` , computerChoice);
+ showResult(`Bat` , computerChoice, resultmsg);
+"
+        >
+          Bat <img id="bat" src="download.jpeg" />
+        </button>
+
+        <button
+          id="kk"
+          onclick="
+  computerChoice=scriptCode();
+ resultmsg=getResult(`Ball` , computerChoice);
+  showResult(`Ball` , computerChoice, resultmsg);
+"
+        >
+          Ball <img id="ball" src="download (1).jpeg" />
+        </button>
+
+        <button
+          id="kkk"
+          onclick="
+  computerChoice=scriptCode();
+  resultmsg=getResult(`Stump` , computerChoice);
+   showResult(`Stump` , computerChoice, resultmsg);
+"
+        >
+          Stump <img id="stump" src="download (3).jpeg" />
+        </button>
+      </div>
+      <div class="kkkkk">
+        <button
+          id="kkkk"
+          onclick="localStorage.clear()
+    resetScore();
+  "
+        >
+          reset data
+        </button>
+      </div>
+      <div class="result">
+        <h3 id="user-Move" style="color: black"></h3>
+        <h3 id="computer-Move"></h3>
+        <h3 id="result"></h3>
+        <h3 id="score"></h3>
+      </div>
+    </div>
+
+    <script>
+      let score;
+      let scoreStr = localStorage.getItem(`score`);
+      resetScore(scoreStr);
+
+      function resetScore(scoreStr) {
+        score = scoreStr
+          ? JSON.parse(scoreStr)
+          : {
+              win: 0,
+              lost: 0,
+              tie: 0,
+            };
+
+        score.displayScore = function () {
+          return `score : win:${score.win} lost:${score.lost} tie:${score.tie} `;
+        };
+        showResult();
+      }
+
+      function scriptCode() {
+        let randomNumber = Math.random() * 3;
+        if (randomNumber > 0 && randomNumber <= 1) {
+          return "Bat";
+        } else if (randomNumber > 1 && randomNumber <= 2) {
+          return "Ball";
+        } else {
+          return "Stump";
+        }
+      }
+
+      function getResult(userMove, computerMove) {
+        if (userMove == `Bat`) {
+          if (computerMove === "Ball") {
+            score.win++;
+            return "user win.";
+          } else if (computerMove === "Bat") {
+            score.tie++;
+            return `it's a tie.`;
+          } else if (computerMove === "Stump") {
+            score.lost++;
+            return `computer win.`;
+          }
+        } else if (userMove === `Ball`) {
+          if (computerMove === "Ball") {
+            score.tie++;
+
+            return "tie";
+          } else if (computerMove === "Bat") {
+            score.lost++;
+
+            return `computer win`;
+          } else if (computerMove === "Stump") {
+            score.win++;
+
+            return `user win.`;
+          }
+        } else {
+          if (computerMove === "Ball") {
+            score.lost++;
+
+            return "computer win.";
+          } else if (computerMove === "Bat") {
+            score.win++;
+
+            return `user win`;
+          } else if (computerMove === "Stump") {
+            score.tie++;
+
+            return `tie.`;
+          }
+        }
+      }
+
+      function showResult(userMove, computerMove, result) {
+        localStorage.setItem(`score`, JSON.stringify(score));
+
+        document.querySelector(`#user-Move`).innerText = userMove
+          ? `you have chosen ${userMove}`
+          : "";
+        document.querySelector(`#computer-Move`).innerText = computerMove
+          ? `computer choice is ${computerMove}`
+          : "";
+
+        document.querySelector(`#result`).innerText = result ? result : "";
+        document.querySelector(`#score`).innerText = score.displayScore();
+      }
+    </script>
+  </body>
+</html>
